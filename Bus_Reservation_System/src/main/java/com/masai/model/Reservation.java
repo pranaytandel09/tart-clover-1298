@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -52,7 +53,7 @@ public class Reservation {
 	private String destination;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name="bus_id")
+	@JoinColumn(name="bus_id")
 	private Bus bus;
 	
 	@OneToOne(mappedBy = "reservation",cascade = CascadeType.ALL)
