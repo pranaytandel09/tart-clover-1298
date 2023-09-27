@@ -49,7 +49,7 @@ public class Feedback {
 	private User user;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name="bus_id")
+	@JoinColumn(name="bus_id")
 	private Bus bus;
 
 	public Feedback(int driverRating, int serviceRating, int overallRating, String comments, LocalDate date) {

@@ -11,11 +11,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Bus {
 
 	@Id
@@ -34,14 +41,6 @@ public class Bus {
 	@NotBlank(message = "mendatory feild")
 	@Column(name="bus_type")
 	private String type;
-	
-	@NotBlank(message = "mendatory feild")
-	@Column(name="bus_route_source")
-	private String routeFrom;
-	
-	@NotBlank(message = "mendatory feild")
-	@Column(name="bus_route_destination")
-	private String routeTo;
 	
 	@Column(name="arrival_time")
 	@JsonFormat(pattern="HH:mm:ss")
@@ -67,19 +66,17 @@ public class Bus {
 	private Feedback feedback;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="route_id")
 	private Route route;
 
 	public Bus(@NotBlank(message = "mendatory feild") String busName,
 			@NotBlank(message = "mendatory feild") String driverName,
-			@NotBlank(message = "mendatory feild") String type, @NotBlank(message = "mendatory feild") String routeFrom,
-			@NotBlank(message = "mendatory feild") String routeTo, LocalTime arrivalTime, LocalTime departureTime,
+			@NotBlank(message = "mendatory feild") String type, LocalTime arrivalTime, LocalTime departureTime,
 			int seats, int availableSeats) {
 		super();
 		this.busName = busName;
 		this.driverName = driverName;
 		this.type = type;
-		this.routeFrom = routeFrom;
-		this.routeTo = routeTo;
 		this.arrivalTime = arrivalTime;
 		this.departureTime = departureTime;
 		this.seats = seats;

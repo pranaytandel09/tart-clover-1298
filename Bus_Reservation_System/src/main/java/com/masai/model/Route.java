@@ -37,7 +37,7 @@ public class Route {
 	@Column(nullable = false)
 	private int distance;
 	
-	@OneToMany                    //have to figure it out later
+	@OneToMany(mappedBy = "route")                    //have to figure it out later
 	@JsonIgnore
 	private List<Bus>bus;
 
