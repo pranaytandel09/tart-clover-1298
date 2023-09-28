@@ -48,7 +48,7 @@ public class Feedback {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="bus_id")
 	private Bus bus;
 

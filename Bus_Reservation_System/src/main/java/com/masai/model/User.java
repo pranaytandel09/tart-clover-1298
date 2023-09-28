@@ -55,14 +55,18 @@ public class User {
 	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\.[a-z]{2,3}", flags = Flag.CASE_INSENSITIVE, message = "invalid email")
 	private String email;
 	
-	@OneToOne()
+	@OneToMany(mappedBy = "user")
 	@JoinColumn(name="reservation_id")
 	@JsonIgnore
-	private Reservation reservation;
+	private List<Reservation> reservation;
 	
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	private List<Feedback>feedback;
+	
+	@OneToOne
+	@JsonIgnore
+	private Role role;
 
 	public User(@NotBlank(message = "mendatory feild") String username,
 			@NotBlank(message = "mendatory feild") String password,

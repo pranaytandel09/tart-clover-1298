@@ -1,6 +1,7 @@
 package com.masai.model;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -57,13 +59,13 @@ public class Bus {
 	private int availableSeats;
 	
 	
-	@OneToOne(mappedBy = "bus")
+	@OneToMany(mappedBy = "bus")
 	@JsonIgnore
-	private Reservation reservation;
+	private List<Reservation> reservation;
 	
-	@OneToOne(mappedBy = "bus", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Feedback feedback;
+	private List<Feedback> feedback;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="route_id")
