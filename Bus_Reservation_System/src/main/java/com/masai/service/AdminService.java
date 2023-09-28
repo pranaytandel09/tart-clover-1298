@@ -2,12 +2,17 @@ package com.masai.service;
 
 import java.util.List;
 
+import com.masai.model.Admin;
 import com.masai.model.Bus;
 import com.masai.model.Route;
 
 import jakarta.validation.Valid;
 
 public interface AdminService {
+	
+	Admin addNewAdmin(@Valid Admin admin);
+	
+//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 	Bus addNewBus(@Valid Bus bus);
 
@@ -21,7 +26,7 @@ public interface AdminService {
 
 	List<Bus> getAllBusesByType(String busType);
 
-	//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	
 	Route addNewRoute(@Valid Route route);
 
@@ -32,4 +37,6 @@ public interface AdminService {
 	Route getRouteById(Integer routeId);
 
 	List<Route> getAllRoute();
+
+	
 }

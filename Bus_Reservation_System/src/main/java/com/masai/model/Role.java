@@ -1,9 +1,15 @@
 package com.masai.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,11 +24,19 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String role;
+	private String name;
 
-	public Role(String role) {
+	public Role(String name) {
 		super();
-		this.role = role;
+		this.name = name;
 	}
+	
+	@OneToMany(mappedBy = "role")
+	@JsonIgnore
+	private List<User> user;
+	
+	@OneToMany(mappedBy = "role")
+	@JsonIgnore
+	private List<Admin> admin;
 
 }

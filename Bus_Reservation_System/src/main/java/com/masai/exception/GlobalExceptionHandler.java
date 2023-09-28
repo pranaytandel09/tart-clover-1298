@@ -24,4 +24,35 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<ErrorDetails>(new ErrorDetails(LocalDateTime.now(), message, request.getDescription(false)), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(BusDoesNotExistException.class)
+	public ResponseEntity<ErrorDetails>BusDoesNotExistExceptionHandler(BusDoesNotExistException e, WebRequest request){
+		
+		return new ResponseEntity<ErrorDetails>(new ErrorDetails(LocalDateTime.now(), e.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(FeedbackDoesNotExistException.class)
+	public ResponseEntity<ErrorDetails>FeedbackDoesNotExistExceptionHandler(FeedbackDoesNotExistException e, WebRequest request){
+		
+		return new ResponseEntity<ErrorDetails>(new ErrorDetails(LocalDateTime.now(), e.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(RouteDoesNotExistException.class)
+	public ResponseEntity<ErrorDetails>RouteDoesNotExistExceptionHandler(RouteDoesNotExistException e, WebRequest request){
+		
+		return new ResponseEntity<ErrorDetails>(new ErrorDetails(LocalDateTime.now(), e.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(UserDoesNotExistException.class)
+	public ResponseEntity<ErrorDetails>UserDoesNotExistExceptionHandler(UserDoesNotExistException e, WebRequest request){
+		
+		return new ResponseEntity<ErrorDetails>(new ErrorDetails(LocalDateTime.now(), e.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(ReservationDoesNotExistException.class)
+	public ResponseEntity<ErrorDetails>ReservationDoesNotExistExceptionHandler(ReservationDoesNotExistException e, WebRequest request){
+		
+		return new ResponseEntity<ErrorDetails>(new ErrorDetails(LocalDateTime.now(), e.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
+	}
+
 }
