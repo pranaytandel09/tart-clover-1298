@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -52,11 +53,11 @@ public class Reservation {
 	@NotBlank(message = "mendatory feild")
 	private String destination;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="bus_id")
 	private Bus bus;
 	
-	@OneToOne(mappedBy = "reservation",cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private User user;
 
 	public Reservation(@NotBlank String status, @NotBlank String type, LocalDate reservationDate, LocalTime localTime,
