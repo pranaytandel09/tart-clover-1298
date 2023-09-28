@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.model.Admin;
 import com.masai.model.Bus;
 import com.masai.model.Route;
 import com.masai.service.AdminService;
@@ -24,11 +26,26 @@ import jakarta.validation.Valid;
 public class AdminController {
 
 	private AdminService adminService;
+	private PasswordEncoder passwordEncoder;
 
-	public AdminController(AdminService adminService) {
+	public AdminController(AdminService adminService,PasswordEncoder passwordEncoder) {
 		super();
 		this.adminService = adminService;
+		this.passwordEncoder =passwordEncoder;
 	}
+	
+	//service related to admin----------------------------->
+	
+	@PostMapping("/admins")
+	public ResponseEntity<Admin>addNewAdmin(@Valid @RequestBody Admin admin){
+		
+		String password = admin.getPassword();
+		password= passwordEncoder.encode(password);
+		admin.setPassword(password);
+		
+		return new ResponseEntity<Admin>(adminService.addNewAdmin(admin), HttpStatus.CREATED);
+	}
+	
 	
 	//service realated to bus------------------------------->
 	

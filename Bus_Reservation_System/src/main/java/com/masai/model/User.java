@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -64,8 +65,7 @@ public class User {
 	@JsonIgnore
 	private List<Feedback>feedback;
 	
-	@OneToOne
-	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Role role;
 
 	public User(@NotBlank(message = "mendatory feild") String username,

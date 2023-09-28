@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ import jakarta.websocket.server.PathParam;
 public class UserController {
 
 	private UserService userService;
-
+	private PasswordEncoder passwordEncoder;
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
@@ -49,6 +50,11 @@ public class UserController {
 	
 	@PostMapping("/users")
 	public ResponseEntity<User>addNewUser(@Valid @RequestBody User user){
+		
+		String password = user.getPassword();
+		String encodedPassword = passwordEncoder.encode(password);
+		
+		user.setPassword(encodedPassword);
 		
 		return new ResponseEntity<User>(userService.addNewUser(user), HttpStatus.CREATED);
 	}

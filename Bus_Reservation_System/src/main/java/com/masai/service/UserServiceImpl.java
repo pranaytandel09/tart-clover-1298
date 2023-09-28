@@ -13,9 +13,11 @@ import com.masai.exception.UserDoesNotExistException;
 import com.masai.model.Bus;
 import com.masai.model.Feedback;
 import com.masai.model.Reservation;
+import com.masai.model.Role;
 import com.masai.model.User;
 import com.masai.repository.FeedbackRepository;
 import com.masai.repository.ReservationRepository;
+import com.masai.repository.RoleRepository;
 import com.masai.repository.RouteRepository;
 import com.masai.repository.UserRepository;
 
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
 	private FeedbackRepository feedbackRepository;
 	private ReservationRepository reservationRepository;
 	private RouteRepository routeRepository;
+	private RoleRepository roleRepository;
 	
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository, FeedbackRepository feedbackRepository,
@@ -57,6 +60,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User addNewUser(@Valid User user) {
 		// TODO Auto-generated method stub
+		
+		Role role = user.getRole();
+		 role = roleRepository.findByName(role.getName());
+		 user.setRole(role);
 		
 		return userRepository.save(user);
 	}

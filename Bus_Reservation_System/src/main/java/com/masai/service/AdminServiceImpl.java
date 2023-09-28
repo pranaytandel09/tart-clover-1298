@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.masai.exception.BusDoesNotExistException;
 import com.masai.exception.RouteDoesNotExistException;
+import com.masai.model.Admin;
 import com.masai.model.Bus;
+import com.masai.model.Role;
 import com.masai.model.Route;
 import com.masai.repository.AdminRepository;
 import com.masai.repository.BusRepository;
+import com.masai.repository.RoleRepository;
 import com.masai.repository.RouteRepository;
 
 import jakarta.validation.Valid;
@@ -22,14 +25,28 @@ public class AdminServiceImpl implements AdminService {
 	private AdminRepository adminRepository;
 	private BusRepository busRepository;
 	private RouteRepository routeRepository;
+	private RoleRepository roleRepository;
 	
 	@Autowired
-	public AdminServiceImpl(AdminRepository adminRepository,BusRepository busRepository,RouteRepository routeRepository) {
+	public AdminServiceImpl(AdminRepository adminRepository,BusRepository busRepository,RouteRepository routeRepository,RoleRepository roleRepository) {
 		
 		this.adminRepository =adminRepository;
 		this.busRepository =busRepository;
 		this.routeRepository =routeRepository;
+		this.roleRepository =roleRepository;
 	}
+	
+	@Override
+	public Admin addNewAdmin(@Valid Admin admin) {
+		// TODO Auto-generated method stub
+		Role role = admin.getRole();
+		 role = roleRepository.findByName(role.getName());
+		 admin.setRole(role);
+		 
+		return adminRepository.save(admin);
+	}
+	
+//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 	@Override
 	public Bus addNewBus(@Valid Bus bus) {
@@ -85,7 +102,7 @@ public class AdminServiceImpl implements AdminService {
 		return busList;
 	}
 
-	//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 	
 	@Override
 	public Route addNewRoute(@Valid Route route) {
@@ -124,4 +141,6 @@ public class AdminServiceImpl implements AdminService {
 	
 		return list;
 	}
+
+	
 }
