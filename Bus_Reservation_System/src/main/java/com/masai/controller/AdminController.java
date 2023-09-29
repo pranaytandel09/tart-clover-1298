@@ -36,7 +36,7 @@ public class AdminController {
 	
 	//service related to admin----------------------------->
 	
-	@PostMapping("/admins")
+	@PostMapping("/admins_signIn")
 	public ResponseEntity<Admin>addNewAdmin(@Valid @RequestBody Admin admin){
 		
 		String password = admin.getPassword();

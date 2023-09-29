@@ -57,7 +57,6 @@ public class User {
 	private String email;
 	
 	@OneToMany(mappedBy = "user")
-	@JoinColumn(name="reservation_id")
 	@JsonIgnore
 	private List<Reservation> reservation;
 	

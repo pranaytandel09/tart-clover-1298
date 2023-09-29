@@ -58,6 +58,7 @@ public class Reservation {
 	private Bus bus;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="user_id")
 	private User user;
 
 	public Reservation(@NotBlank String status, @NotBlank String type, LocalDate reservationDate, LocalTime localTime,

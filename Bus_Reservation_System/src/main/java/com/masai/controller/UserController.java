@@ -48,7 +48,7 @@ public class UserController {
 		return new ResponseEntity<List<User>>(userService.getAllUser(), HttpStatus.OK);
 	}
 	
-	@PostMapping("/users")
+	@PostMapping("/users_signIn")
 	public ResponseEntity<User>addNewUser(@Valid @RequestBody User user){
 		
 		String password = user.getPassword();

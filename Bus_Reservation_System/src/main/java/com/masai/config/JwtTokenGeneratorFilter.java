@@ -19,7 +19,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 
 	@Override
@@ -29,6 +31,7 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 	
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authentication);
         if (null != authentication) {
         	
         	
@@ -69,7 +72,7 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 	
-        return !request.getServletPath().equals("/signIn");	
-	}
+        return !request.getServletPath().equals("/user/users_signIn");
 	
+}
 }
