@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,7 +46,15 @@ public class AppConfig {
 		})
 		.authorizeHttpRequests(auth ->{
 			auth
-				.requestMatchers("/swagger-ui*/**","/v3/api-docs/**").permitAll();
+				.requestMatchers(HttpMethod.POST, "/admin/admins_signIn").permitAll()
+				.requestMatchers(HttpMethod.POST, "/user/users_signIn").permitAll()
+				.requestMatchers("/swagger-ui.html").permitAll()
+				.requestMatchers("/admin/buses/{busId}", "/admin/routes/{routeId}").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/admin/buses").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/admin/buses").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/admin/routes").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/admin/routes").hasRole("ADMIN")
+				;
 				})
 			.csrf(csrf -> csrf.disable())
 			.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
