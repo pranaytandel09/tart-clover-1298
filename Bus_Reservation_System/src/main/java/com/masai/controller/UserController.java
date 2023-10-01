@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.model.Feedback;
@@ -19,30 +21,31 @@ import com.masai.model.Reservation;
 import com.masai.model.User;
 import com.masai.service.UserService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 @EnableWebSecurity
 public class UserController {
 
 	private UserService userService;
 	private PasswordEncoder passwordEncoder;
-	public UserController(UserService userService) {
+	public UserController(UserService userService,PasswordEncoder passwordEncoder) {
 		super();
 		this.userService = userService;
+		this.passwordEncoder =passwordEncoder;
 	}
 	
 	//services related to user account------------------>
 	
-	@GetMapping("/users/{userId}")
+	@GetMapping("/get_users/{userId}")
 	public ResponseEntity<User>getUserById(@PathVariable Integer userId){
 		
 		return new ResponseEntity<User>(userService.getUserById(userId), HttpStatus.OK);
 	}
 	
-	@GetMapping("/users")
+	@GetMapping("/get_users")
 	public ResponseEntity<List<User>>getAllUser(){
 		
 		return new ResponseEntity<List<User>>(userService.getAllUser(), HttpStatus.OK);
@@ -59,13 +62,13 @@ public class UserController {
 		return new ResponseEntity<User>(userService.addNewUser(user), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/users")
+	@PutMapping("/update_users")
 	public ResponseEntity<User>updateUser(@Valid @RequestBody User user){
 		
 		return new ResponseEntity<User>(userService.updateUser(user), HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/users/{userId}")
+	@DeleteMapping("/delete_users/{userId}")
 	public ResponseEntity<User>deleteUserById(@PathVariable Integer userId){
 		
 		return new ResponseEntity<User>(userService.deleteUserById(userId), HttpStatus.OK);
@@ -75,37 +78,37 @@ public class UserController {
 	
 	//services related to reservations--------------------------------------->
 	
-	@PostMapping("/users/reservations")
+	@PostMapping("/users/add_reservations")
 	public ResponseEntity<Reservation>addNewReservation(@Valid @RequestBody Reservation reservation){
 		
 		return new ResponseEntity<Reservation>(userService.addNewReservation(reservation), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/users/reservations")
+	@PutMapping("/users/update_reservations")
 	public ResponseEntity<Reservation>updateReservation(@Valid @RequestBody Reservation reservation){
 		
 		return new ResponseEntity<Reservation>(userService.updateReservation(reservation), HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/users/reservations/{reservationsId}")
+	@DeleteMapping("/users/delete_reservations/{reservationId}")
 	public ResponseEntity<Reservation>deleteReservation(@PathVariable Integer reservationId){
 		
 		return new ResponseEntity<Reservation>(userService.deleteReservation(reservationId), HttpStatus.OK);
 	}
 	
-	@GetMapping("/users/reservations/{reservationsId}")
+	@GetMapping("/users/get_reservations_by_reservationId/{reservationId}")
 	public ResponseEntity<Reservation>getReservationById(@PathVariable Integer reservationId){
 		
 		return new ResponseEntity<Reservation>(userService.getReservationById(reservationId), HttpStatus.OK);
 	}
 	
-	@GetMapping("/users/reservations/{userId}")
+	@GetMapping("/users/get_reservations_by_userId/{userId}")
 	public ResponseEntity<List<Reservation>>getAllReservationForUser(@PathVariable Integer userId){
 		
 		return new ResponseEntity<List<Reservation>>(userService.getAllReservationForUser(userId), HttpStatus.OK);
 	}
 	
-	@GetMapping("/users/reservations/{date}")
+	@GetMapping("/users/get_reservations_by_date/{date}")
 	public ResponseEntity<List<Reservation>>getAllReservationByDate(@PathVariable LocalDate date){
 		
 		return new ResponseEntity<List<Reservation>>(userService.getAllReservationByDate(date), HttpStatus.OK);
@@ -115,25 +118,25 @@ public class UserController {
 	
 	//services related to feedback---------------------------------------------------------->
 	
-	@PostMapping("/users/feedbacks")
+	@PostMapping("/users/add_feedbacks")
 	public ResponseEntity<Feedback>addNewFeedback(@Valid @RequestBody Feedback feedback){
 		
 		return new ResponseEntity<Feedback>(userService.addNewFeedback(feedback), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/users/feedbacks")
+	@PutMapping("/users/update_feedbacks")
 	public ResponseEntity<Feedback>updateFeedback(@Valid @RequestBody Feedback feedback){
 		
 		return new ResponseEntity<Feedback>(userService.updateFeedback(feedback), HttpStatus.OK);
 	}
 	
-	@GetMapping("/users/feedbacks/{feedbackId}")
+	@GetMapping("/users/get_feedbacks_by_feedbackId/{feedbackId}")
 	public ResponseEntity<Feedback>getFeedbackById(@PathVariable Integer feedbackId){
 		
 		return new ResponseEntity<Feedback>(userService.getFeedbackById(feedbackId), HttpStatus.OK);
 	}
 	
-	@GetMapping("/users/feedbacks/{userId}")
+	@GetMapping("/users/get_feedbacks_by_userId/{userId}")
 	public ResponseEntity<List<Feedback>>getAllFeedbackForUser(@PathVariable Integer userId){
 		
 		return new ResponseEntity<List<Feedback>>(userService.getAllFeedbackForUser(userId), HttpStatus.OK);

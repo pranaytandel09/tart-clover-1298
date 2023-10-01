@@ -1,6 +1,7 @@
 package com.masai.model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -61,13 +62,13 @@ public class Bus {
 	
 	@OneToMany(mappedBy = "bus")
 	@JsonIgnore
-	private List<Reservation> reservation;
+	private List<Reservation> reservation=new ArrayList<>();
 	
-	@OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "bus")
 	@JsonIgnore
-	private List<Feedback> feedback;
+	private List<Feedback> feedback=new ArrayList<>();
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="route_id")
 	private Route route;
 

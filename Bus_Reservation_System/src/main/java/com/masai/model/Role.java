@@ -1,5 +1,6 @@
 package com.masai.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,10 +34,10 @@ public class Role {
 	
 	@OneToMany(mappedBy = "role")
 	@JsonIgnore
-	private List<User> user;
+	private List<User> user=new ArrayList<>();
 	
 	@OneToMany(mappedBy = "role")
 	@JsonIgnore
-	private List<Admin> admin;
+	private List<Admin> admin=new ArrayList<>();
 
 }
