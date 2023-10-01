@@ -53,11 +53,11 @@ public class Reservation {
 	@NotBlank(message = "mendatory feild")
 	private String destination;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="bus_id")
 	private Bus bus;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private User user;
 

@@ -10,6 +10,7 @@ import com.masai.exception.BusDoesNotExistException;
 import com.masai.exception.RouteDoesNotExistException;
 import com.masai.model.Admin;
 import com.masai.model.Bus;
+import com.masai.model.Reservation;
 import com.masai.model.Role;
 import com.masai.model.Route;
 import com.masai.repository.AdminRepository;
@@ -71,6 +72,12 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		Bus bus = busRepository.findById(busId).get();
 		if(bus==null)throw new BusDoesNotExistException("Bus does not exist with given busId: "+busId);
+		
+		List<Reservation> reservation = bus.getReservation();
+		for(Reservation r:reservation) {
+			r.setBus(null);
+		}
+		
 		busRepository.deleteById(busId);
 		return bus;
 	}
@@ -121,6 +128,11 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		Route route = routeRepository.findById(routeId).get();
 		if(route==null)throw new RouteDoesNotExistException("Route does not exist with route id: "+routeId);
+		
+		List<Bus> bus = route.getBus();
+		for(Bus b:bus) {
+			b.setRoute(null);
+		}
 		
 		routeRepository.deleteById(routeId);
 		return route;

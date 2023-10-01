@@ -1,5 +1,6 @@
 package com.masai.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +40,7 @@ public class Route {
 	
 	@OneToMany(mappedBy = "route")                    //have to figure it out later
 	@JsonIgnore
-	private List<Bus>bus;
+	private List<Bus>bus=new ArrayList<>();
 
 	public Route(@NotBlank(message = "mendatory feild") String routeSource,
 			@NotBlank(message = "mendatory feild") String routeDestination, int distance) {

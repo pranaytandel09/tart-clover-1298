@@ -1,5 +1,6 @@
 package com.masai.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,7 +51,7 @@ public class User {
 	
 	@Column(nullable =false)
 	@Pattern(regexp ="[6,9][0-9]{9}", message = "invalid contact details ")
-	private Long contact;
+	private String contact;
 	
 	@NotBlank(message = "mendatory feild")
 	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\.[a-z]{2,3}", flags = Flag.CASE_INSENSITIVE, message = "invalid email")
@@ -58,11 +59,11 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
-	private List<Reservation> reservation;
+	private List<Reservation> reservation=new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
-	private List<Feedback>feedback;
+	private List<Feedback>feedback=new ArrayList<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Role role;
@@ -71,7 +72,7 @@ public class User {
 			@NotBlank(message = "mendatory feild") String password,
 			@NotBlank(message = "mendatory feild") String firstName,
 			@NotBlank(message = "mendatory feild") String lastName,
-			@Pattern(regexp = "[6,9][0-9]{9}", message = "invalid contact details ") Long contact,
+			@Pattern(regexp = "[6,9][0-9]{9}", message = "invalid contact details ") String contact,
 			@NotBlank(message = "mendatory feild") @Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\.[a-z]{2,3}", flags = Flag.CASE_INSENSITIVE, message = "invalid email") String email) {
 		super();
 		this.username = username;

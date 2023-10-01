@@ -46,15 +46,21 @@ public class AppConfig {
 		})
 		.authorizeHttpRequests(auth ->{
 			auth
-				.requestMatchers(HttpMethod.POST, "/admin/admins_signIn").permitAll()
-				.requestMatchers(HttpMethod.POST, "/user/users_signIn").permitAll()
-				.requestMatchers("/swagger-ui.html").permitAll()
-				.requestMatchers("/admin/buses/{busId}", "/admin/routes/{routeId}").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/admin/buses").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/admin/buses").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/admin/routes").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/admin/routes").hasRole("ADMIN")
-				;
+			.requestMatchers("/user/users_signIn","admin/admins_signIn","admin/get_buses_by_busId/{busId}","admin/get_buses_by_type/{busType}",
+					"admin/get_buses","admin/get_routes","admin/get_routes_by_routeId/{routeId}","/swagger-ui*/**","/v3/api-docs/**").permitAll()
+			
+			.requestMatchers("user/update_users","user/delete_users/{userId}","user/users/add_reservations","user/users/update_reservations",
+					"user/users/delete_reservations/{reservationId}","user/users/add_feedbacks","user/users/update_feedbacks").hasRole("USER")
+			
+			.requestMatchers("admin/add_buses","admin/update_buses","admin/delete_buses/{busId}","admin/add_routes","admin/update_routes","admin/delete_routes/{routeId}",
+					"user/get_users","user/users/get_reservations_by_date/{date}").hasRole("ADMIN")
+			
+			.requestMatchers("user/get_users/{userId}","user/users/get_reservations_by_reservationId/{reservationId}","user/users/get_reservations_by_userId/{userId}"
+					,"user/users/get_feedbacks_by_feedbackId/{feedbackId}","user/users/get_feedbacks_by_userId/{userId}").hasAnyRole("USER","ADMIN")
+			.anyRequest().authenticated();
+			
+			//.anyRequest().permitAll();
+				
 				})
 			.csrf(csrf -> csrf.disable())
 			.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)

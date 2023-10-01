@@ -34,12 +34,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository, FeedbackRepository feedbackRepository,
-			ReservationRepository reservationRepository, RouteRepository routeRepository) {
+			ReservationRepository reservationRepository, RouteRepository routeRepository,RoleRepository roleRepository) {
 		super();
 		this.userRepository = userRepository;
 		this.feedbackRepository = feedbackRepository;
 		this.reservationRepository = reservationRepository;
 		this.routeRepository = routeRepository;
+		this.roleRepository =roleRepository;
 	}
 
 	@Override
@@ -71,6 +72,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(@Valid User user) {
 		// TODO Auto-generated method stub
+		Optional<User> op = userRepository.findById(user.getId());
+		if(!op.isPresent())throw new UserDoesNotExistException("User does not exist with given User Id: "+user.getId());
+		
 		return userRepository.save(user);
 	}
 
@@ -78,8 +82,10 @@ public class UserServiceImpl implements UserService {
 	public User deleteUserById(Integer userId) {
 		// TODO Auto-generated method stub
 		
-		User user = userRepository.findById(userId).get();
-		if(user==null)throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		Optional<User> op = userRepository.findById(userId);
+		if(!op.isPresent())throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		
+		User user = op.get();
 		userRepository.deleteById(userId);
 		return user;
 	}
@@ -111,8 +117,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Reservation deleteReservation(Integer reservationId) {
 		// TODO Auto-generated method stub
-		Reservation reservation = reservationRepository.findById(reservationId).get();
-		if(reservation==null)throw new ReservationDoesNotExistException("Reservation not found for given reservation id: "+reservationId);
+		 Optional<Reservation> op = reservationRepository.findById(reservationId);
+		 
+		if(!op.isPresent())throw new ReservationDoesNotExistException("Reservation not found for given reservation id: "+reservationId);
+		Reservation reservation = op.get();
 		reservationRepository.deleteById(reservationId);
 		return reservation;
 	}
@@ -127,8 +135,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Reservation> getAllReservationForUser(Integer userId) {
 		// TODO Auto-generated method stub
-		User user = userRepository.findById(userId).get();
-		if(user==null)throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		Optional<User> op = userRepository.findById(userId);
+		if(!op.isPresent() )throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		
+		User user = op.get();
+		
+		if(user.getReservation().size()==0)throw new ReservationDoesNotExistException("Reservation list empty!");
 		
 		return user.getReservation();
 	}
@@ -177,9 +189,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Feedback> getAllFeedbackForUser(Integer userId) {
 		// TODO Auto-generated method stub
-		User user = userRepository.findById(userId).get();
-		if(user==null)throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		Optional<User> op = userRepository.findById(userId);
+		if(!op.isPresent())throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
 		
+		User user = op.get();
 		return user.getFeedback();
 	}
 
