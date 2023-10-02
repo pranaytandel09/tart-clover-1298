@@ -38,23 +38,14 @@ public class AdminController {
 	
 	//service related to admin----------------------------->
 	
-	@PostMapping("/admins_signIn")
-	public ResponseEntity<Admin>addNewAdmin(@Valid @RequestBody Admin admin){
-		
-		String password = admin.getPassword();
-		password= passwordEncoder.encode(password);
-		admin.setPassword(password);
-		
-		return new ResponseEntity<Admin>(adminService.addNewAdmin(admin), HttpStatus.CREATED);
-	}
 	
 	
 	//service realated to bus------------------------------->
 	
-	@PostMapping("/add_buses")
-	public ResponseEntity<Bus>addNewBus(@Valid @RequestBody Bus bus){
+	@PostMapping("/add_buses/{routeId}")
+	public ResponseEntity<Bus>addNewBus(@PathVariable Integer routeId, @Valid @RequestBody Bus bus){
 		
-		return new ResponseEntity<Bus>(adminService.addNewBus(bus), HttpStatus.CREATED);
+		return new ResponseEntity<Bus>(adminService.addNewBus(routeId, bus), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/update_buses")

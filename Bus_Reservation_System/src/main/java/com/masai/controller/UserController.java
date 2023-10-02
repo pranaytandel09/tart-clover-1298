@@ -3,9 +3,11 @@ package com.masai.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +40,19 @@ public class UserController {
 	}
 	
 	//services related to user account------------------>
+	
+	@GetMapping("/logIn")
+	public ResponseEntity<User> getLoggedInCustomerDetailsHandler(Authentication auth){
+
+		System.out.println("authentication obj: "+auth); // this Authentication object having Principle object details
+		System.out.println("username: "+auth.getName());
+
+		 User user= userService.getUserDetailsByUsername(auth.getName());
+
+		 return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+
+
+	}
 	
 	@GetMapping("/get_users/{userId}")
 	public ResponseEntity<User>getUserById(@PathVariable Integer userId){
@@ -78,10 +93,10 @@ public class UserController {
 	
 	//services related to reservations--------------------------------------->
 	
-	@PostMapping("/users/add_reservations")
-	public ResponseEntity<Reservation>addNewReservation(@Valid @RequestBody Reservation reservation){
+	@PostMapping("/users/add_reservations/{userId}/{busId}")
+	public ResponseEntity<Reservation>addNewReservation(@PathVariable Integer userId, @PathVariable Integer busId ,@Valid @RequestBody Reservation reservation){
 		
-		return new ResponseEntity<Reservation>(userService.addNewReservation(reservation), HttpStatus.CREATED);
+		return new ResponseEntity<Reservation>(userService.addNewReservation(userId,busId,reservation), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/users/update_reservations")
@@ -118,10 +133,10 @@ public class UserController {
 	
 	//services related to feedback---------------------------------------------------------->
 	
-	@PostMapping("/users/add_feedbacks")
-	public ResponseEntity<Feedback>addNewFeedback(@Valid @RequestBody Feedback feedback){
+	@PostMapping("/users/add_feedbacks/{userId}/{busId}")
+	public ResponseEntity<Feedback>addNewFeedback(@PathVariable Integer userId, @PathVariable Integer busId ,@Valid @RequestBody Feedback feedback){
 		
-		return new ResponseEntity<Feedback>(userService.addNewFeedback(feedback), HttpStatus.CREATED);
+		return new ResponseEntity<Feedback>(userService.addNewFeedback(userId,busId,feedback), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/users/update_feedbacks")

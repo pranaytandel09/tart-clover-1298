@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exception.BusDoesNotExistException;
 import com.masai.exception.FeedbackDoesNotExistException;
 import com.masai.exception.ReservationDoesNotExistException;
 import com.masai.exception.UserDoesNotExistException;
@@ -15,6 +16,7 @@ import com.masai.model.Feedback;
 import com.masai.model.Reservation;
 import com.masai.model.Role;
 import com.masai.model.User;
+import com.masai.repository.BusRepository;
 import com.masai.repository.FeedbackRepository;
 import com.masai.repository.ReservationRepository;
 import com.masai.repository.RoleRepository;
@@ -31,16 +33,26 @@ public class UserServiceImpl implements UserService {
 	private ReservationRepository reservationRepository;
 	private RouteRepository routeRepository;
 	private RoleRepository roleRepository;
-	
+	private RoleService roleService;
+	private BusRepository busRepository;
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository, FeedbackRepository feedbackRepository,
-			ReservationRepository reservationRepository, RouteRepository routeRepository,RoleRepository roleRepository) {
+			ReservationRepository reservationRepository, RouteRepository routeRepository,RoleRepository roleRepository,RoleService roleService,BusRepository busRepository) {
 		super();
 		this.userRepository = userRepository;
 		this.feedbackRepository = feedbackRepository;
 		this.reservationRepository = reservationRepository;
 		this.routeRepository = routeRepository;
 		this.roleRepository =roleRepository;
+		this.roleService =roleService;
+		this.busRepository =busRepository;
+	}
+	
+	@Override
+	public User getUserDetailsByUsername(String username) {
+		// TODO Auto-generated method stub
+		Optional<User> op = userRepository.findByUsername(username);
+		return op.orElseThrow(()->new UserDoesNotExistException("user not exist with given username: "+username));
 	}
 
 	@Override
@@ -63,7 +75,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		
 		Role role = user.getRole();
-		 role = roleRepository.findByName(role.getName());
+		 role = roleService.getRoleByName(role.getName());
 		 user.setRole(role);
 		
 		return userRepository.save(user);
@@ -86,6 +98,17 @@ public class UserServiceImpl implements UserService {
 		if(!op.isPresent())throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
 		
 		User user = op.get();
+		List<Feedback> feedback = user.getFeedback();
+		for(Feedback f:feedback) {
+			f.setUser(null);
+		}
+		
+		List<Reservation> reservation = user.getReservation();
+		
+		for(Reservation r:reservation) {
+			r.setUser(null);
+		}
+		
 		userRepository.deleteById(userId);
 		return user;
 	}
@@ -93,14 +116,21 @@ public class UserServiceImpl implements UserService {
 	//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 	@Override
-	public Reservation addNewReservation(@Valid Reservation reservation) {
+	public Reservation addNewReservation(Integer userId, Integer busId,@Valid Reservation reservation) {
 		// TODO Auto-generated method stub
-		User user = reservation.getUser();
+		
+		Optional<User> op = userRepository.findById(userId);
+		if(!op.isPresent())throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		User user = op.get();
+		
 		List<Reservation> reservationList = user.getReservation();
 		reservationList.add(reservation);
 		user.setReservation(reservationList);
 		
-		Bus bus = reservation.getBus();
+		Optional<Bus> opBus = busRepository.findById(busId);
+		if(!opBus.isPresent())throw new BusDoesNotExistException("Bus does not exist with given Bus Id: "+busId);
+		Bus bus = opBus.get();
+		
 		List<Reservation> busReservationList = bus.getReservation();
 		busReservationList.add(reservation);
 		bus.setReservation(busReservationList);
@@ -157,15 +187,20 @@ public class UserServiceImpl implements UserService {
 	//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 	@Override
-	public Feedback addNewFeedback(@Valid Feedback feedback) {
+	public Feedback addNewFeedback(Integer userId, Integer busId,@Valid Feedback feedback) {
 		// TODO Auto-generated method stub
+		Optional<User> op = userRepository.findById(userId);
+		if(!op.isPresent())throw new UserDoesNotExistException("User does not exist with given User Id: "+userId);
+		User user = op.get();
 		
-		User user = feedback.getUser();
 		List<Feedback> userFeedbackList = user.getFeedback();
 		userFeedbackList.add(feedback);
 		user.setFeedback(userFeedbackList);
 		
-		Bus bus = feedback.getBus();
+		Optional<Bus> opBus = busRepository.findById(busId);
+		if(!opBus.isPresent())throw new BusDoesNotExistException("Bus does not exist with given Bus Id: "+busId);
+		Bus bus = opBus.get();
+		
 		List<Feedback> busFeedbackList = bus.getFeedback();
 		busFeedbackList.add(feedback);
 		bus.setFeedback(busFeedbackList);
@@ -195,5 +230,7 @@ public class UserServiceImpl implements UserService {
 		User user = op.get();
 		return user.getFeedback();
 	}
+
+	
 
 }

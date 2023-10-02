@@ -27,7 +27,8 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 	
 		
 		String jwt= request.getHeader(SecurityConstants.JWT_HEADER);
-
+		
+		System.out.println(jwt);
 		
 		if(jwt != null) {
 						
@@ -36,6 +37,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 			
 				jwt = jwt.substring(7);
 
+				System.out.println("jwt after removing bearer: "+jwt);
 				
 				SecretKey key= Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 				
@@ -64,7 +66,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 	
-		return request.getServletPath().equals("/user/users_signIn");
+		return request.getServletPath().equals("/user/logIn");
 	}
 
 

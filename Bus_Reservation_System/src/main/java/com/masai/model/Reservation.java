@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -53,12 +54,14 @@ public class Reservation {
 	@NotBlank(message = "mendatory feild")
 	private String destination;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="bus_id")
+	@JsonIgnore
 	private Bus bus;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")
+	@JsonIgnore
 	private User user;
 
 	public Reservation(@NotBlank String status, @NotBlank String type, LocalDate reservationDate, LocalTime localTime,

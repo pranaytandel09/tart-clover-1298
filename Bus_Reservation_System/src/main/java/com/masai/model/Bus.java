@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -68,8 +70,10 @@ public class Bus {
 	@JsonIgnore
 	private List<Feedback> feedback=new ArrayList<>();
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="route_id")
+	@JsonIgnore
+
 	private Route route;
 
 	public Bus(@NotBlank(message = "mendatory feild") String busName,

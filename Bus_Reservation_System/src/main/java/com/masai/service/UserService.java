@@ -23,7 +23,7 @@ public interface UserService {
 	
 	//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
-	Reservation addNewReservation(@Valid Reservation reservation);
+	Reservation addNewReservation(Integer userId, Integer busId, @Valid Reservation reservation);
 
 	Reservation updateReservation(@Valid Reservation reservation);
 
@@ -35,7 +35,7 @@ public interface UserService {
 	
 	//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
-	Feedback addNewFeedback(@Valid Feedback feedback);
+	Feedback addNewFeedback(Integer userId, Integer busId, @Valid Feedback feedback);
 
 	Feedback updateFeedback(@Valid Feedback feedback);
 
@@ -44,5 +44,7 @@ public interface UserService {
 	List<Feedback> getAllFeedbackForUser(Integer userId);
 
 	List<Reservation> getAllReservationByDate(LocalDate date);
+
+	User getUserDetailsByUsername(String username);
 
 }
