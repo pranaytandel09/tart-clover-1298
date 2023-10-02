@@ -8,18 +8,18 @@ if(userName==""){
 
 function addFeedback() {
     let uuid = JSON.parse(localStorage.getItem("uuid")) || "";
-    if (uuid == "") {
-        openCustomAlert("Please Login First");
-    } else {
-        let url = `http://localhost:8088/feedback/add?key=${uuid}`;
-        let driver=document.getElementById("driver").value;
-        let service=document.getElementById("service").value;
-        let overall=document.getElementById("overall").value;
-        let comment= document.getElementById("comment").value;
-        if (driver>10||driver==""|| service == ''||service>10 ||overall==''||overall>10) {
-            showToast('Please Give field value in range specific!!');
-            return false;
-        }
+    // if (uuid == "") {
+    //     openCustomAlert("Please Login First");
+    // } else {
+    //     let url = `http://localhost:8088/feedback/add?key=${uuid}`;
+    //     let driver=document.getElementById("driver").value;
+    //     let service=document.getElementById("service").value;
+    //     let overall=document.getElementById("overall").value;
+    //     let comment= document.getElementById("comment").value;
+    //     if (driver>10||driver==""|| service == ''||service>10 ||overall==''||overall>10) {
+    //         showToast('Please Give field value in range specific!!');
+    //         return false;
+    //     }
         let obj = {
             "driverRating":driver,
             "serviceRating": service,

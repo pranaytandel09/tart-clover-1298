@@ -18,7 +18,7 @@ input[type="text"],
 textarea {
     width: 100%;
     padding: 10px;
-    border: 2px solid rgba(14, 158, 77, 0.9);
+    border: 2px solid #c53b48;
     border-radius: 4px;
     resize: none;
 }
@@ -33,7 +33,7 @@ textarea {
 input[type="submit"] {
     width: 100%;
     padding: 10px;
-    border: 2px solid rgba(14, 158, 77, 0.9);
+    border: 2px solid #c53b48;
     border-radius: 4px;
     resize: none;
 }
@@ -41,13 +41,17 @@ input[type="submit"] {
 #busid{
     width: 100%;
     padding: 10px;
-    border: 2px solid rgba(14, 158, 77, 0.9);
+    border: 2px solid#c53b48;
     border-radius: 4px;
     resize: none;
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color:#c53b48;
+}
+.title{
+    color: #c53b48;
+    
 }
 
 /* Style the form container */

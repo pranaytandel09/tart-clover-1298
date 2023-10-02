@@ -1,7 +1,7 @@
 .ticket-search-container{
     width: 60%;
     margin: 60px auto;
-    box-shadow: 0px 3px 8px rgba(14, 158, 77, 0.24);
+    box-shadow: 0px 3px 8px #c53b48;
     padding: 30px;
     border-radius: 10px;
     display: flex;
@@ -15,7 +15,7 @@
     width: 98%;
     height: 50%;
     border-radius: 10px;
-    border: 2px solid #0E9E4D;
+    border: 2px solid #c53b48;
     outline: 0;
     font-size: 18px;
     padding: 10px;
@@ -33,12 +33,12 @@ input::placeholder {
     cursor: pointer;
     border-radius: 10px;
     border: none;
-    background-color: #0E9E4D;
+    background-color: #c53b48;
     color: white;
     font-size: 18px;
 }
 #search-ticket-button:hover{
-    background-color: #0B7841;
+    background-color: #c53b48;
 }
 
 .ticket-details{
@@ -55,9 +55,9 @@ table {
     width: 60%;
     margin: 40px auto;
     padding: 10px;
-    box-shadow: 0px 3px 8px rgba(14, 158, 77, 0.24);
+    box-shadow: 0px 3px 8px #c53b48;
     border-radius: 10px;
-    background-color: #0B7841;
+    background-color: #c53b48;
     font-size: 18px;
     font-weight: bold;
 }
@@ -66,14 +66,14 @@ table {
 }
 
 th{
-    border-right: 1px solid yellow;
+    border-right: 1px solid #c53b48;
     width: 40%;
 }
 
 th, td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid yellow;
+    border-bottom: 1px solid #c53b48;
 }
 
 #cancel-or-download-ticket{

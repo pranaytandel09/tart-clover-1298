@@ -5,11 +5,11 @@ const download_ticket_button = document.getElementById('download-ticket-button')
 const cancel_ticket_button = document.getElementById('cancel-ticket-button');
 var fetchedDataId = null;
 
- const currUserId = JSON.parse(localStorage.getItem('uuid'));
- if(currUserId == null){
-     alert("Please Login to Check Ticket status...!");
-     window.location.href="./login.html";
- }
+//  const currUserId = JSON.parse(localStorage.getItem('uuid'));
+//  if(currUserId == null){
+//      alert("Please Login to Check Ticket status...!");
+//      window.location.href="./login.html";
+//  }
 
 
 function fetchAndDisplayTicket(searchId) {

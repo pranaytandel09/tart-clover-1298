@@ -6,13 +6,13 @@ body {
 /* ------------------------------------------------- Css For Navbar ----------------------------------------------- */
 .navbar {
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, #0E9E4D 0px 2px 6px -2px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, #c53b48 0px 2px 6px -2px;
   max-height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 8%;
-  border: 1px solid #0E9E4D;
+  border: 1px solid #c53b48;
   font-size: 16px;
 }
 
@@ -37,7 +37,7 @@ body {
 }
 
 .menu li a:hover {
-  color: #0E9E4D;
+  color: #c53b48;
 }
 
 .dropdown > ul > li{
@@ -63,7 +63,7 @@ body {
 }
 
 .dropdown-content > li > a:hover{
-  background-color: #0E9E4D;
+  background-color: #c53b48;
   color: white;
 }
 
@@ -160,7 +160,7 @@ body {
 }
 .dropdown-content > li > a:hover{
     background-color: white;
-    color: #0E9E4D;
+    color: #c53b48;
   }
 .hamburger {
   display: block;
@@ -177,7 +177,7 @@ body {
   flex-direction: column; /* Change to column to display vertically when open */
   justify-content: center;
   width: 100%;
-  background-color: #0E9E4D;
+  background-color: #c53b48;
   padding: 15px 10px;
 }
 
@@ -228,7 +228,7 @@ body {
     left: 0;
     width: 40%;
     height: 1px;
-    background-color: #0E9E4D; 
+    background-color: #c53b48; 
   }
   
   .col-md-4 {
@@ -260,7 +260,7 @@ body {
     width: 10%;
   }
   .widget-title{
-    color: #0E9E4D;
+    color: #c53b48;
   }
   .footer-top{
    padding-top: 3%;
