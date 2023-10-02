@@ -10,6 +10,7 @@ import com.masai.exception.BusDoesNotExistException;
 import com.masai.exception.RouteDoesNotExistException;
 import com.masai.model.Admin;
 import com.masai.model.Bus;
+import com.masai.model.Feedback;
 import com.masai.model.Reservation;
 import com.masai.model.Role;
 import com.masai.model.Route;
@@ -27,36 +28,31 @@ public class AdminServiceImpl implements AdminService {
 	private BusRepository busRepository;
 	private RouteRepository routeRepository;
 	private RoleRepository roleRepository;
+	private RoleService roleService;
 	
 	@Autowired
-	public AdminServiceImpl(AdminRepository adminRepository,BusRepository busRepository,RouteRepository routeRepository,RoleRepository roleRepository) {
+	public AdminServiceImpl(AdminRepository adminRepository,BusRepository busRepository,RouteRepository routeRepository,RoleRepository roleRepository,RoleService roleService) {
 		
 		this.adminRepository =adminRepository;
 		this.busRepository =busRepository;
 		this.routeRepository =routeRepository;
 		this.roleRepository =roleRepository;
+		this.roleService =roleService;
 	}
 	
-	@Override
-	public Admin addNewAdmin(@Valid Admin admin) {
-		// TODO Auto-generated method stub
-		Role role = admin.getRole();
-		 role = roleRepository.findByName(role.getName());
-		 admin.setRole(role);
-		 
-		return adminRepository.save(admin);
-	}
 	
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 	@Override
-	public Bus addNewBus(@Valid Bus bus) {
+	public Bus addNewBus(Integer routeId,@Valid Bus bus) {
 		// TODO Auto-generated method stub
 		
-		Route route = bus.getRoute();
-		List<Bus> busList = route.getBus();
-		busList.add(bus);
-		route.setBus(busList);
+		Optional<Route> routeOp = routeRepository.findById(routeId);
+		
+		if(!routeOp.isPresent())throw new RouteDoesNotExistException("route does not exist with given routeId: "+routeId);
+		Route route = routeOp.get();
+		
+		bus.setRoute(route);
 		
 		return busRepository.save(bus);
 	}
@@ -70,12 +66,19 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Bus deleteBus(Integer busId) {
 		// TODO Auto-generated method stub
-		Bus bus = busRepository.findById(busId).get();
-		if(bus==null)throw new BusDoesNotExistException("Bus does not exist with given busId: "+busId);
+		Optional<Bus> busOp = busRepository.findById(busId);
+		
+		if(!busOp.isPresent())throw new BusDoesNotExistException("bus does not exist with given routeId: "+busId);
+		Bus bus = busOp.get();
 		
 		List<Reservation> reservation = bus.getReservation();
 		for(Reservation r:reservation) {
 			r.setBus(null);
+		}
+		
+		List<Feedback> feedback = bus.getFeedback();
+		for(Feedback f: feedback) {
+			f.setBus(null);
 		}
 		
 		busRepository.deleteById(busId);

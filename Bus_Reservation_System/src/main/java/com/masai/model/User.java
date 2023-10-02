@@ -1,9 +1,19 @@
 package com.masai.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
@@ -27,7 +37,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class User implements UserDetails,CredentialsContainer{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +49,7 @@ public class User {
 	private String username;
 	
 	@NotBlank(message = "mendatory feild")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
 	@Column(name="first_name")
@@ -81,6 +92,50 @@ public class User {
 		this.lastName = lastName;
 		this.contact = contact;
 		this.email = email;
+	}
+
+	@Override
+	public void eraseCredentials() {
+		// TODO Auto-generated method stub
+		this.password=null;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		Set<SimpleGrantedAuthority>authSet= new HashSet<>();
+		authSet.add(new SimpleGrantedAuthority(role.getName()));
+		return authSet;
+	}
+
+//	@Override
+//	public String getUsername() {
+//		// TODO Auto-generated method stub
+//		return getUsername();
+//	}
+	
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 	
 	

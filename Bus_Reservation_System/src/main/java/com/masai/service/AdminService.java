@@ -10,11 +10,11 @@ import jakarta.validation.Valid;
 
 public interface AdminService {
 	
-	Admin addNewAdmin(@Valid Admin admin);
+	
 	
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-	Bus addNewBus(@Valid Bus bus);
+	Bus addNewBus(Integer routeId, @Valid Bus bus);
 
 	Bus updateBus(@Valid Bus bus);
 
