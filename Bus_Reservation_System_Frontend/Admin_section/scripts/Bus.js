@@ -22,7 +22,7 @@ function getProduct(){
 function showData(data){
     Tbody.innerHTML = null;
     
-    let htmlData = data.map((el)=>getCard(el.busId,el.busName,el.driverName,el.busType,el.routeForm,el.routeTo,el.arrivalTime,el.departureTime,el.seats,el.availabeSeats))
+    let htmlData = data.map((el)=>getCard(el.busId,el.busName,el.driverName,el.busType,el.routeFrom,el.routeTo,el.arrivalTime,el.departureTime,el.seats,el.seats))
     Tbody.innerHTML = htmlData.join(" ");
     
     let tr = document.getElementsByClassName("edit");
