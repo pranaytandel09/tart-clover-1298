@@ -3,7 +3,7 @@ BookBusBindas
 
 ## Tech Stack
 
-#### Java | Hibernate | Spring Boot | Spring Framework | Spring Data JPA | Spring Boot Validation | Spring Boot Web | Spring Boot DevTools| Postman | MySQL Database | Maven | Swagger UI | Lombok | HTML | CSS | JavaScript
+#### Java | Hibernate | Spring Framework | Spring Security | MySQL | Maven | Swagger UI | Lombok | HTML | CSS | JavaScript
 
 ## Modules
 - Login Module
