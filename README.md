@@ -18,7 +18,7 @@ BookBusBindas
 - MySQL Server
 
 ## Installation & Run
-
+```bash
 # To run this project locally:
 
 # Clone the repository and navigate to the directory
@@ -39,15 +39,16 @@ mvn clean install
 java -jar target/decisive-iron-5903-0.0.1-SNAPSHOT.jar
 
 # Your application should be up and running at http://localhost:8080.
-
+```
 ## API Root Endpoint
 
-
+```
 https://localhost:8080/
+```
 
-
-
+```
 http://localhost:8080/swagger-ui/index.html
+```
 
 ## Collaborators
 
