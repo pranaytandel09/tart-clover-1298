@@ -9,7 +9,7 @@ function openCustomAlert(message) {
   customAlert.style.display = 'block';
   setTimeout(() => {
       closeCustomAlert();
-      window.location.href="../index.html";
+      window.location.href="./index.html";
   }, 3000)
 }
 
