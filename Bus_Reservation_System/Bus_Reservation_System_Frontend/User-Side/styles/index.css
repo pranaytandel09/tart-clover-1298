@@ -1,5 +1,5 @@
 :root {
-  --main-color: #0e9e4d;
+  --main-color: #D84E55;
 }
 body{
   margin: 0px;
@@ -66,7 +66,7 @@ body{
   font-size: 38px;
 }
 .home-tagline-and-button > button{
-  background-color: #0E9E4D;
+  background-color: #D84E55;
   color: white;
   padding: 10px;
   width: 160px;
@@ -76,7 +76,7 @@ body{
   font-weight: bold;
 }
 .home-tagline-and-button > button:hover{
-  background-color: #0B7841;
+  background-color: #D84E55;
 }
 
 /* Animation For Moving Bus */
@@ -209,11 +209,11 @@ body{
 
 .box:hover {
   box-shadow: rgba(14, 158, 77, 0.24) 0px 3px 8px; /* Box-shadow on hover */
-  border-color: #0E9E4D; /* Box border color on hover */
+  border-color: #D84E55; /* Box border color on hover */
 }
 
 .box:hover .amenity {
-  color: #0E9E4D; /* Change content color inside the box on hover */
+  color: #D84E55; /* Change content color inside the box on hover */
 }
 
 .amenity {
@@ -257,6 +257,7 @@ body{
 .moving-bus-sticky{
   bottom: 160px;
 }
+
 @keyframes moveBus {
   0%{
     transform: translateX(0px);
@@ -277,7 +278,7 @@ body{
     width: 10%;
   }
   .widget-title{
-    color: #0E9E4D;
+    color: #D84E55;
   }
   .footer-top{
    padding-top: 3%;
@@ -421,6 +422,8 @@ button {
   transition: all ease 0.4s;
   line-height: 1;
 }
+
 .rating{
   border-radius: 1px solid blue;
 }
+
