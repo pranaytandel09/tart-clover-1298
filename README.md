@@ -71,7 +71,7 @@ http://localhost:8080/swagger-ui/index.html
 
 ## Collaborators
 
-- [Parnay Tandel](https://github.com/pranaytandel09) (Team Lead)
+- [Pranay Tandel](https://github.com/pranaytandel09) (Team Lead)
 - [Kishor Kamble](https://github.com/kishork18)
 - [Prashant Upadhayay](https://github.com/Prashantomm)
 - [Aman Choure](https://github.com/amanacr0358)
