@@ -1,4 +1,5 @@
 # BookBusBindaas
+deploy link: https://melodious-cassata-4c43f9.netlify.app/
 
 **BookBusBindaas** is a collaborative project developed by a team of 5 dedicated individuals. This innovative online platform serves as a one-stop solution for bus ticket booking. The project is designed with both administrators and users in mind, providing a seamless and user-friendly experience.
 
