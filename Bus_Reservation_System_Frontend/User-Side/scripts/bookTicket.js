@@ -114,12 +114,18 @@ function createBusDiv(bus, departureDate) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                if(!data.reservationId){
+                    alert("Your Booking is already done please try another root")
+                    window.location.href="../index.html"
+                }else{
+                     console.log(data);
                 alert(
                     "Ticket Booked Successfully!\nYour Ticket Id is " +
                         data.reservationId
                 );
                 window.location.href = "../index.html";
+                }
+               
             })
             .catch((error) => {
                 console.error("Error:", error);
